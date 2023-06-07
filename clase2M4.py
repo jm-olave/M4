@@ -32,7 +32,10 @@ class Transaccion:
     
     def __init__(self, cantidad, cuenta):
         self.cantidad = cantidad
-        self.cuenta = cuenta
+        if isinstance(cuenta, CuentaDeBanco):
+            self.cuenta = cuenta
+        else:
+            print("Error en la creacion de la Transaccion cuenta no es objeto apropiado")
 
     def ejecutar(self):
         if self.cantidad > 0:
@@ -43,8 +46,23 @@ class Transaccion:
             print("tipo de cuenta:", self.cuenta.tipo)
 
 
+class Banco:
+    def __init__(self):
+        self.cuentasdebanco = []
+
+    def crear_cuenta_de_banco(self, cuenta):
+        self.cuentasdebanco.append(cuenta)
+
+    def solicitar_prestamo(self, cuenta):
+        if cuenta.balance > 500:
+            print("prestamo aceptado para la cuenta", cuenta.getNumero())
+        else:
+            print("prestamo rechazado, balance menor a 500")
 
 
+
+
+# objetos 
 cuentadeVictor = CuentaDeBanco("1234574", "corriente", 1000)
 print(cuentadeVictor.nombre_del_banco)
 cuentadeCaterin = CuentaDeBanco("47367217", "ahorros", 500)
@@ -56,6 +74,14 @@ CuentaDeBanco.get_nombre_banco()
 
 # transacciones
 print("balance de Victor :",  cuentadeVictor.balance)
+transacciondeCargo = Transaccion(500, cuentadeRodrigo)
 transacciondePago = Transaccion(300, cuentadeVictor)
 transacciondePago.ejecutar()
 print("balance de Victor actualizado :", cuentadeVictor.balance)
+
+bancoAwakelab = Banco()
+bancoAwakelab.crear_cuenta_de_banco(cuentadeCaterin)
+bancoAwakelab.crear_cuenta_de_banco(cuentadeRodrigo)
+bancoAwakelab.solicitar_prestamo(cuentadeCaterin)
+for i in bancoAwakelab.cuentasdebanco:  
+    print(i.getNumero())
