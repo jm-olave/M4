@@ -21,6 +21,8 @@ class Labrador(Perro):
         print("estoy sacando la lengua")
         velocidad += 10
         return super().correr(velocidad)
+    
+    
 class Dalmata(Perro):
     pass
 
