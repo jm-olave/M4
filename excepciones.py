@@ -45,8 +45,10 @@ def carga_de_archivo(path):
     
 try:
     procesamiento_de_datos([])
-except Exception as variable:
+except TypeError as variable:
     print(variable)
+except AdalidExcepcion as a:
+    print(a)
 finally:
     variable = "manejado"
     print(variable)
